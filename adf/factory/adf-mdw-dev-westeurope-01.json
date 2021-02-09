@@ -1,0 +1,12 @@
+{
+	"name": "adf-mdw-dev-westeurope-01",
+	"properties": {
+		"globalParameters": {
+			"environment": {
+				"type": "string",
+				"value": "dev"
+			}
+		}
+	},
+	"location": "westeurope"
+}

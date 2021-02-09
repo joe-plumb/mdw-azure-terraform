@@ -1,0 +1,10 @@
+{
+	"name": "AzureDataLakeStorage1",
+	"properties": {
+		"type": "AzureBlobFS",
+		"annotations": [],
+		"typeProperties": {
+			"url": "https://stmdwdevweu01.dfs.core.windows.net"
+		}
+	}
+}
