@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "AzureKeyVault",
 		"typeProperties": {
-			"baseUrl": "https://kvmdwdevwesteurope03.vault.azure.net/"
+			"baseUrl": "https://kvmdwdevwesteuropecfm9a2.vault.azure.net/"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/linkedservices"

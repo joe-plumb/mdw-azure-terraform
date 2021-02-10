@@ -23,10 +23,11 @@ provider "azurerm" {
 resource "random_string" "random" {
   length = 6
   special = false
+  upper = false
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "mdw-${var.env}-${var.region}-01"
+  name     = "mdw-${var.env}-${var.region}-${random_string.random.result}"
   location = var.region
   tags = var.default_tags
 }
@@ -45,10 +46,10 @@ resource "azurerm_data_factory" "adf" {
   vsts_configuration {
             account_name    = "jpazuredev"
             branch_name     = "main" 
-            project_name    = "mdw-azure-terraform"
+            project_name    = "moderndatawarehouse"
             repository_name = "mdw-azure-terraform" 
             root_folder     = "/adf" 
-            tenant_id       = "${data.azurerm_client_config.current.tenant_id}"
+            tenant_id       = data.azurerm_client_config.current.tenant_id  
   }
 
 }
@@ -132,7 +133,7 @@ resource "azurerm_synapse_firewall_rule" "synfwr" {
 
 # Key Vault
 resource "azurerm_key_vault" "kv" {
-  name                        = "kvmdw${var.env}${var.region}03"
+  name                        = "kvmdw${var.env}${var.region}${random_string.random.result}"
   location                    = azurerm_resource_group.rg.location
   resource_group_name         = azurerm_resource_group.rg.name
   enabled_for_disk_encryption = true
@@ -196,5 +197,5 @@ resource "azurerm_key_vault_secret" "kvs_syndb" {
 resource "azurerm_role_assignment" "adf_storage_ra" {
   scope                 = azurerm_storage_account.adls.id 
   role_definition_name  = "Storage Blob Data Contributor"
-  principal_id          = azurerm_data_factory.identity.principal_id
+  principal_id          = azurerm_data_factory.adf.identity[0].principal_id
 }

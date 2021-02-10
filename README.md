@@ -1,7 +1,7 @@
 
 
-# Modern Data Warehousing with Microsoft Azure (WIP)
-This repo serves as a starting point to demonstrate how to deliver a Modern Data Warehouse using Azure and Terraform. 
+# Modern Data Warehousing with Terraform and Microsoft Azure
+This repo demonstrates how to deliver a Modern Data Warehouse using Azure and Terraform. 
 
 ![terraform and azure logos against a purple background](/img/1.jpeg)
 
@@ -26,12 +26,6 @@ This repo serves as a starting point to demonstrate how to deliver a Modern Data
     1. Also update the URLs in the `adf/linkedService/*.json` files to point to the services in your development environment
     1. Commit and push these changes to your Azure DevOps repository.
 
-
-### TODO
-- Change to public dataset and update with Synapse artefacts to reflect this
-- Add `.ado` pipelines for release of ADF ARM template and Synapse DACPAC
-- Script changes to `adf` artefacts to ease deployment
-
 ## Contents
 ### `/iac`
 Contains Terraform deployment for the environments.
@@ -40,7 +34,7 @@ Contains Terraform deployment for the environments.
 Contains SSDT project that mananges and maintains Synapse data model.
 
 ### `/adf`
-Contains Azure Data Factory artefacts developed by the team.
+Contains sample Azure Data Factory artefacts.
 
 ## Know limitations
 - These templates do not implement best practice wrt network security. This is beyond the scope of this example.
