@@ -1,0 +1,35 @@
+resources:
+  pipelines:
+  - pipeline: buildpipeline   # Name of the pipeline resource
+    source: mdw-ci # Name of the pipeline referenced by the pipeline resource
+    trigger: 
+      branches:
+      - releases/*
+      - main
+
+
+
+jobs:
+- job: "DeployAdfToTest"
+  steps:
+
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: 'ARM Template deployment: Resource Group scope'
+    inputs:
+      azureResourceManagerConnection: 'Joe Plumb Azure Internal Consumption (29f97392-4349-4e87-9ad4-35ae6c1ec2e7)'
+      subscriptionId: '$(subscriptionid)'
+      resourceGroupName: '$(rgname)'
+      location: 'North Europe'
+      csmFile: '$(System.DefaultWorkingDirectory)/_moderndatawarehouse/adf-mdw-dev-westeurope-01/ARMTemplateForFactory.json'
+      csmParametersFile: '$(System.DefaultWorkingDirectory)/_moderndatawarehouse/adf-mdw-dev-westeurope-01/ARMTemplateParametersForFactory.json'
+      overrideParameters: '-factoryName $(adfname) -dataFactory_properties_globalParameters_environment_value test -AzureDataLakeStorage1_properties_typeProperties_url https://stmdwtestneu01.dfs.core.windows.net -AzureKeyVault1_properties_typeProperties_baseUrl https://kvmdwtestnortheurope03.vault.azure.net/ -dataFactory_location northeurope'
+
+- job: "DeploySynapseToTest"
+  steps:
+  - task: SqlAzureDacpacDeployment@1
+    displayName: 'Azure SQL DacpacTask'
+    inputs:
+      azureSubscription: 'Joe Plumb Azure Internal Consumption (29f97392-4349-4e87-9ad4-35ae6c1ec2e7)'
+      AuthenticationType: connectionString
+      ConnectionString: '$(sqlpoolconn)'
+      DacpacFile: '$(System.DefaultWorkingDirectory)/_Synapse Build/drop/s/synapse/workloadsyndemo/bin/Release/workloadsyndemo.dacpac'
