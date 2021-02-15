@@ -38,7 +38,7 @@ jobs:
 
 - job: "BuildAdfArmTemplate"
   pool:
-    vmImage: ubuntu-default
+    vmImage: ubuntu-latest
   steps:
   # Installs Node and the npm packages saved in your package.json file in the build
   - task: NodeTool@0
