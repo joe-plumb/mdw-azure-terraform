@@ -2,7 +2,7 @@
 # Requires a package.json file located in the target repository
 
 trigger:
-- main #collaboration branch
+- adf #collaboration branch
 
 pool:
   vmImage: 'ubuntu-latest'
