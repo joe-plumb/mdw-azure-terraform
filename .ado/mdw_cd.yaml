@@ -1,6 +1,7 @@
 resources:
   pipelines:
-  - pipeline: mdw-cd   # Name of the pipeline resource
+
+  - pipeline: mdwcd   # Name of the pipeline resource
     source: mdw-ci # Name of the pipeline referenced by the pipeline resource
 
 jobs:
