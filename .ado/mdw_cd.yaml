@@ -1,8 +1,19 @@
+<<<<<<< HEAD
+resources:
+  pipelines:
+  - pipeline: mdwreleasepipeline   # Name of the pipeline resource
+    source: mdw-ci # Name of the pipeline referenced by the pipeline resource
+    # trigger: 
+    #   branches:
+    #   - main
+
+=======
  # Trigger on main branch changes
 trigger: 
   branches:
   - main
   
+>>>>>>> 9cf914081c73cf5b1875b7856d9bc35303728355
 jobs:
 - template: templates/adf_cd.yaml
 - template: templates/synapse_cd.yaml
