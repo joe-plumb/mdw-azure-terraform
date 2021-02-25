@@ -1,0 +1,29 @@
+# Synapse SSDT Build job
+- job: "BuildSynapseDacPac"
+  pool:
+    vmImage: 'windows-latest'
+  steps:
+  - task: NuGetToolInstaller@1
+  - task: NuGetCommand@2
+    inputs:
+      restoreSolution: '$(solution)'
+  - task: VSBuild@1
+    inputs:
+      solution: '$(solution)'
+      platform: '$(buildPlatform)'
+      configuration: '$(buildConfiguration)'
+  - task: VSTest@2
+    inputs:
+      platform: '$(buildPlatform)'
+      configuration: '$(buildConfiguration)'
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+    inputs:
+      SourceFolder: '$(agent.builddirectory)'
+      TargetFolder: '$(build.artifactstagingdirectory)'
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Artifact: drop'
+    inputs:
+      targetPath: '$(build.artifactstagingdirectory)'
+      artifact: SynapseDacPac
+      publishLocation: 'pipeline'

@@ -123,7 +123,7 @@ resource "azurerm_synapse_firewall_rule" "synfwr" {
 
 # Key Vault
 resource "azurerm_key_vault" "kv" {
-  name                        = "kvmdw${var.env}${var.region}${random_string.random.result}"
+  name                        = "kvmdw${var.env}${var.regionshort}${random_string.random.result}"
   location                    = azurerm_resource_group.rg.location
   resource_group_name         = azurerm_resource_group.rg.name
   enabled_for_disk_encryption = true

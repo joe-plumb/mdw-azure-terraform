@@ -1,0 +1,14 @@
+trigger:
+- main
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+jobs:
+- template: templates/adf_ci.yaml
+- template: templates/synapse_ci.yaml
+
+
+
