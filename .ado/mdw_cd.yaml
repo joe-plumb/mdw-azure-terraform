@@ -2,7 +2,9 @@ resources:
   pipelines:
   - pipeline: mdwcd   # Name of the pipeline resource
     source: mdw-ci # Name of the pipeline referenced by the pipeline resource
-
+    trigger: 
+      branches:
+      - main
 
 jobs:
 - template: templates/adf_cd.yaml
