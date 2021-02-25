@@ -1,3 +1,5 @@
+trigger: none
+
 resources:
   pipelines:
   - pipeline: mdwcd   # Name of the pipeline resource
