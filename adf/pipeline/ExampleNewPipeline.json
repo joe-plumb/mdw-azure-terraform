@@ -1,0 +1,26 @@
+{
+	"name": "ExampleNewPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "env",
+					"value": {
+						"value": "@concat('The environment is: ', pipeline().globalParameters.environment)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"env": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
