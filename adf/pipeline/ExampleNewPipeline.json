@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Set variable here",
+				"name": "Set variable",
 				"type": "SetVariable",
 				"dependsOn": [],
 				"userProperties": [],
