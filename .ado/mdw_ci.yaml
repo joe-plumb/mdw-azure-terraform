@@ -1,5 +1,20 @@
+<<<<<<< HEAD
 trigger: 
 - main
+=======
+trigger:
+  branches:
+    - main
+paths:
+    include:
+      - adf/*
+      - synapse/*
+      
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+>>>>>>> update trigger
 
 jobs:
 - job: "Build_ADFARMTemplates"
