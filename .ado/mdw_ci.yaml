@@ -1,8 +1,6 @@
 trigger:
-  branches:
-    include:
-      - main
-      
+- main
+
 jobs:
 - template: templates/adf_ci.yaml
 # - template: templates/synapse_ci.yaml
