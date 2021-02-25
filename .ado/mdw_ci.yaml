@@ -1,16 +1,11 @@
 trigger:
-  branches:
-    - main
+- main
 paths:
-    include:
-      - adf/*
-      # - synapse/*
-      - package.json
-
+  include:
+    - adf/*
+    # - synapse/*
+    - package.json
       
 jobs:
 - template: templates/adf_ci.yaml
 # - template: templates/synapse_ci.yaml
-
-
-
