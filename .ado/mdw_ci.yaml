@@ -4,16 +4,12 @@ trigger:
 paths:
     include:
       - adf/*
-      - synapse/*
+      # - synapse/*
+      - package.json
       
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-
 jobs:
 - template: templates/adf_ci.yaml
-- template: templates/synapse_ci.yaml
+# - template: templates/synapse_ci.yaml
 
 
 
