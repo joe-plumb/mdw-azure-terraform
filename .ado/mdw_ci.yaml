@@ -1,4 +1,5 @@
-trigger: none
+trigger: 
+- main
 
 jobs:
 - template: templates/adf_ci.yaml
