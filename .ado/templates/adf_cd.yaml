@@ -1,4 +1,5 @@
-# ADF ARM tempaltes Deployment Job 
+# ADF ARM tempaltes Deployment Job
+jobs: 
 - job: "DeployAdf"
   steps:
   - task: AzureResourceManagerTemplateDeployment@3

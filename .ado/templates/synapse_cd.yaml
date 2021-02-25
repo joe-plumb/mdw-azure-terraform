@@ -1,4 +1,5 @@
 # Synapse SSDT Deploy Job
+jobs:
 - job: "DeploySynapse"
   steps:
   - task: SqlAzureDacpacDeployment@1

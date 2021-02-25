@@ -1,6 +1,7 @@
 # YAML file to validate ADF json
 # Requires a package.json file located in the target repository
 
+jobs:
 - job: "Build ADF ARM Templates"
   pool:
     vmImage: 'ubuntu-latest'
