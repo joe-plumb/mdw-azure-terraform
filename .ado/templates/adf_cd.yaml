@@ -9,6 +9,7 @@ jobs:
       artifact: 'AdfArmTemplates'
       pipeline: '$(pipelineId)'
       runVersion: 'latest'
+      path: $(System.DefaultWorkingDirectory)/AdfArmTemplates
   - task: AzureResourceManagerTemplateDeployment@3
     displayName: 'ARM Template deployment: Resource Group scope'
     inputs:
