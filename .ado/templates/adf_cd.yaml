@@ -2,8 +2,13 @@
 jobs: 
 - job: "Deploy_ADF"
   steps:
-  - download: current
-    artifact: AdfArmTemplates
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      source: 'specific'
+      project: '$(project)'
+      artifact: 'AdfArmTemplates'
+      pipeline: '$(pipelineId)'
+      runVersion: 'latest'
   - task: AzureResourceManagerTemplateDeployment@3
     displayName: 'ARM Template deployment: Resource Group scope'
     inputs:
