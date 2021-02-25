@@ -2,7 +2,7 @@
 # Requires a package.json file located in the target repository
 
 jobs:
-- job: "Build ADF ARM Templates"
+- job: "Build_ADFARMTemplates"
   pool:
     vmImage: 'ubuntu-latest'
   steps:

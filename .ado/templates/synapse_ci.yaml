@@ -1,6 +1,6 @@
 # Synapse SSDT Build job
 jobs:
-- job: "BuildSynapseDacPac"
+- job: "Build_SynapseDacPac"
   pool:
     vmImage: 'windows-latest'
   steps:

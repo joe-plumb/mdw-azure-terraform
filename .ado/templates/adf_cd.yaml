@@ -1,6 +1,6 @@
 # ADF ARM tempaltes Deployment Job
 jobs: 
-- job: "DeployAdf"
+- job: "Deploy_ADF"
   steps:
   - task: AzureResourceManagerTemplateDeployment@3
     displayName: 'ARM Template deployment: Resource Group scope'
