@@ -1,0 +1,22 @@
+# ADF ARM tempaltes Deployment Job
+jobs: 
+- job: "Deploy_ADF"
+  steps:
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      source: 'specific'
+      project: '$(project)'
+      artifact: 'AdfArmTemplates'
+      pipeline: '$(pipelineId)'
+      runVersion: 'latest'
+      path: $(System.DefaultWorkingDirectory)/AdfArmTemplates
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: 'ARM Template deployment: Resource Group scope'
+    inputs:
+      azureResourceManagerConnection: '$(svc_conn)'
+      subscriptionId: '$(subscriptionid)'
+      resourceGroupName: '$(rgname)'
+      location: '$(location)'
+      csmFile: '$(System.DefaultWorkingDirectory)/AdfArmTemplates/ARMTemplateForFactory.json'
+      csmParametersFile: '$(System.DefaultWorkingDirectory)/AdfArmTemplates/ARMTemplateParametersForFactory.json'
+      overrideParameters: '-factoryName $(adfname) -dataFactory_properties_globalParameters_environment_value test -AzureDataLakeStorage1_properties_typeProperties_url https://stmdwtestweungb83e.dfs.core.windows.net/ -AzureKeyVault1_properties_typeProperties_baseUrl https://kvmdwtestweungb83e.vault.azure.net/'

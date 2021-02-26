@@ -27,13 +27,16 @@ This repo demonstrates how to deliver a Modern Data Warehouse using Azure and Te
     1. Commit and push these changes to your Azure DevOps repository.
 
 ## Contents
-### `/iac`
+### `.ado/`
+Contains sample yaml pipelines for use in Azure DevOps for CI/CD of ADF and Synapse artefacts
+
+### `iac/`
 Contains Terraform deployment for the environments.
 
-### `/synapse`
+### `synapse/`
 Contains SSDT project that mananges and maintains Synapse data model.
 
-### `/adf`
+### `adf/`
 Contains sample Azure Data Factory artefacts.
 
 ## Know limitations

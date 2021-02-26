@@ -1,0 +1,13 @@
+# Synapse SSDT Deploy Job
+jobs:
+- job: "Deploy_Synapse"
+  pool:
+    vmImage: 'windows-latest'
+  steps:
+  - task: SqlAzureDacpacDeployment@1
+    displayName: 'Azure SQL DacpacTask'
+    inputs:
+      azureSubscription: '$(svc_conn)'
+      AuthenticationType: connectionString
+      ConnectionString: '$(sqlpoolconn)'
+      DacpacFile: '$(System.DefaultWorkingDirectory)/_Synapse Build/drop/s/synapse/workloadsyndemo/bin/Release/workloadsyndemo.dacpac'
