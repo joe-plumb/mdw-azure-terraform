@@ -1,5 +1,5 @@
 {
-	"name": "ExampleNewPipeline",
+	"name": "GenericDemoPipe",
 	"properties": {
 		"activities": [
 			{
