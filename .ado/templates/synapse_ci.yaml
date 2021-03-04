@@ -2,6 +2,9 @@
 # Further reading is available in the documentation
 # https://docs.microsoft.com/en-gb/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-continuous-integration-and-deployment#continuous-deployment-with-the-azure-synapse-analytics-or-database-deployment-task
 
+pool:
+  vmImage: 'windows-latest'
+
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
@@ -9,8 +12,6 @@ variables:
 
 jobs:
 - job: "Build_SynapseDacPac"
-  pool:
-    vmImage: 'windows-latest'
   steps:
   - task: NuGetToolInstaller@1
   - task: NuGetCommand@2
