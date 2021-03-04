@@ -57,5 +57,45 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="bin" />
+    <Folder Include="bin\Debug" />
+    <Folder Include="dbo" />
+    <Folder Include="dbo\Tables" />
+    <Folder Include="obj" />
+    <Folder Include="obj\Debug" />
+    <Folder Include="Security" />
+    <Folder Include="Import Schema Logs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\workloadsyndemo.dacpac" />
+    <None Include="bin\Debug\workloadsyndemo.dll" />
+    <None Include="bin\Debug\workloadsyndemo.pdb" />
+    <None Include="obj\Debug\Model.xml" />
+    <None Include="obj\Debug\workloadsyndemo.dll" />
+    <None Include="obj\Debug\workloadsyndemo.pdb" />
+    <None Include="obj\Debug\workloadsyndemo.sqlproj.FileListAbsolute.txt" />
+    <None Include="obj\Debug\workloadsyndemo.sqlprojAssemblyReference.cache" />
+    <None Include="Import Schema Logs\workloadsyndemo_20210202072755.log" />
+    <None Include="workloadsyndemo.jfm" />
+    <None Include="workloadsyndemo.sqlproj.user" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\DimAccount.sql" />
+    <Build Include="dbo\Tables\DimCurrency.sql" />
+    <Build Include="dbo\Tables\DimCustomer.sql" />
+    <Build Include="dbo\Tables\DimCustomer_SCD.sql" />
+    <Build Include="dbo\Tables\FactCallCenter.sql" />
+    <Build Include="dbo\Tables\FactCurrencyRate.sql" />
+    <Build Include="dbo\Tables\FactFilm.sql" />
+    <Build Include="dbo\Tables\FactFinance-2010-02-01T00_00_00.000Z-2013-12-28T00_00_00.sql" />
+    <Build Include="dbo\Tables\FactInternetSales.sql" />
+    <Build Include="dbo\Tables\FactInternetSalesReason.sql" />
+    <Build Include="dbo\Tables\FactProductInventory.sql" />
+    <Build Include="dbo\Tables\FactResellerSales.sql" />
+    <Build Include="dbo\Tables\FactSalesQuota.sql" />
+    <Build Include="dbo\Tables\FactSurveyResponse.sql" />
+    <Build Include="dbo\Tables\NewFactCurrencyRate.sql" />
+    <Build Include="dbo\Tables\ProspectiveBuyer.sql" />
+    <Build Include="Security\syndevweu01.sql" />
   </ItemGroup>
 </Project>

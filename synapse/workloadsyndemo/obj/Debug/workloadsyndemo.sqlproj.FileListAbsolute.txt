@@ -1,0 +1,6 @@
+C:\Users\joplum\source\repos\mdw-azure-terraform\synapse\workloadsyndemo\bin\Debug\workloadsyndemo.dacpac
+C:\Users\joplum\source\repos\mdw-azure-terraform\synapse\workloadsyndemo\bin\Debug\workloadsyndemo.dll
+C:\Users\joplum\source\repos\mdw-azure-terraform\synapse\workloadsyndemo\bin\Debug\workloadsyndemo.pdb
+C:\Users\joplum\source\repos\mdw-azure-terraform\synapse\workloadsyndemo\obj\Debug\workloadsyndemo.sqlprojAssemblyReference.cache
+C:\Users\joplum\source\repos\mdw-azure-terraform\synapse\workloadsyndemo\obj\Debug\workloadsyndemo.dll
+C:\Users\joplum\source\repos\mdw-azure-terraform\synapse\workloadsyndemo\obj\Debug\workloadsyndemo.pdb
