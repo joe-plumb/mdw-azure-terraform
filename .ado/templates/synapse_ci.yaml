@@ -16,7 +16,7 @@ jobs:
     solution: '**/*.sln'
     buildPlatform: 'Any CPU'
     buildConfiguration: 'Release'
-    
+
   steps:
   - task: NuGetToolInstaller@1
   - task: NuGetCommand@2
@@ -32,7 +32,7 @@ jobs:
       platform: '$(buildPlatform)'
       configuration: '$(buildConfiguration)'
   - task: CopyFiles@2
-    condition: and(succeeded(), eq('${{ parameters.doThing }}', true))
+    condition: and(succeeded(), eq('${{ parameters.doPublish }}', true))
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
     inputs:
       SourceFolder: '$(agent.builddirectory)'
