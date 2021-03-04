@@ -13,9 +13,14 @@ jobs:
       targetPath: '$(Build.Repository.LocalPath)/ArmTemplate'
       artifact: 'AdfArmTemplates'
       publishLocation: 'pipeline'
+
 - job: "Build_SynapseDacPac"
   pool:
     vmImage: 'windows-latest'
+  variables:
+    solution: '**/*.sln'
+    buildPlatform: 'Any CPU'
+    buildConfiguration: 'Release'
   steps:
   - template: templates/synapse_ci.yaml
   - task: CopyFiles@2
@@ -24,7 +29,7 @@ jobs:
       SourceFolder: '$(agent.builddirectory)'
       TargetFolder: '$(build.artifactstagingdirectory)'
   - task: PublishPipelineArtifact@1
-    displayName: 'Publish Artifact: drop'
+    displayName: 'Publish Artifact: SynapseDacPac'
     inputs:
       targetPath: '$(build.artifactstagingdirectory)'
       artifact: 'SynapseDacPac'
