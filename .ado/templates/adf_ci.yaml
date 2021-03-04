@@ -1,42 +1,33 @@
 # YAML file to validate ADF json
 # Requires a package.json file located in the target repository
+# Further reading is available in the docs
+# https://docs.microsoft.com/en-us/azure/data-factory/continuous-integration-deployment-improvements
 
-jobs:
-- job: "Build_ADFARMTemplates"
-  pool:
-    vmImage: 'ubuntu-latest'
-  steps:
-  # Installs Node and the npm packages saved in your package.json file in the build
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '10.x'
-    displayName: 'Install Node.js'
+steps:
+# Installs Node and the npm packages saved in your package.json file in the build
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
 
-  - task: Npm@1
-    inputs:
-      command: 'install'
-      verbose: true
-    displayName: 'Install npm package'
+- task: Npm@1
+  inputs:
+    command: 'install'
+    verbose: true
+  displayName: 'Install npm package'
 
-  # Validates all of the ADF resources in the repository. You will get the same validation errors as when "Validate All" is clicked
-  # Enter the appropriate subscription and name for the source factory 
-  - task: Npm@1
-    inputs:
-      command: 'custom'
-      customCommand: 'run build validate $(Build.Repository.LocalPath)/adf /subscriptions/$(subscriptionid)/resourceGroups/testResourceGroup/providers/Microsoft.DataFactory/factories/$(adfname)'
-    displayName: 'Validate'
+# Validates all of the ADF resources in the repository. You will get the same validation errors as when "Validate All" is clicked
+# Enter the appropriate subscription and name for the source factory 
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'run build validate $(Build.Repository.LocalPath)/adf /subscriptions/$(subscriptionid)/resourceGroups/testResourceGroup/providers/Microsoft.DataFactory/factories/$(adfname)'
+  displayName: 'Validate'
 
-  # Validate and then generate the ARM template into the destination folder. Same as clicking "Publish" from UX
-  # The ARM template generated is not published to the ‘Live’ version of the factory. Deployment should be done using a CI/CD pipeline. 
-  - task: Npm@1
-    inputs:
-      command: 'custom'
-      customCommand: 'run build export $(Build.Repository.LocalPath)/adf /subscriptions/$(subscriptionid)/resourceGroups/testResourceGroup/providers/Microsoft.DataFactory/factories/$(adfname) "ArmTemplate"'
-    displayName: 'Validate and Generate ARM template'
-
-  # Publish the Artifact to be used as a source for a release pipeline
-  - task: PublishPipelineArtifact@1
-    inputs:
-      targetPath: '$(Build.Repository.LocalPath)/ArmTemplate'
-      artifact: 'AdfArmTemplates'
-      publishLocation: 'pipeline'
+# Validate and then generate the ARM template into the destination folder. Same as clicking "Publish" from UX
+# The ARM template generated is not published to the ‘Live’ version of the factory. Deployment should be done using a CI/CD pipeline. 
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'run build export $(Build.Repository.LocalPath)/adf /subscriptions/$(subscriptionid)/resourceGroups/testResourceGroup/providers/Microsoft.DataFactory/factories/$(adfname) "ArmTemplate"'
+  displayName: 'Validate and Generate ARM template'

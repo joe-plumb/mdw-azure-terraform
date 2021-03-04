@@ -1,4 +1,7 @@
 # ADF ARM tempaltes Deployment Job
+# Further reading is available in the docs
+# https://docs.microsoft.com/en-us/azure/data-factory/continuous-integration-deployment-improvements
+
 jobs: 
 - job: "Deploy_ADF"
   steps:
