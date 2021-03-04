@@ -2,7 +2,7 @@ trigger: none
 
 resources:
   pipelines:
-  - pipeline: mdwcd   # Name of the pipeline resource
+  - pipeline: 'mdw-cd'   # Name of the pipeline resource
     source: 'mdw-ci' # Name of the pipeline referenced by the pipeline resource
     trigger: 
       branches:
@@ -10,5 +10,5 @@ resources:
 
 jobs:
 - template: templates/adf_cd.yaml
-# - template: templates/synapse_cd.yaml
+- template: templates/synapse_cd.yaml
 
