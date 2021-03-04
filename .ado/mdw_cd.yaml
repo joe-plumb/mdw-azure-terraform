@@ -10,5 +10,5 @@ resources:
 
 jobs:
 - template: templates/adf_cd.yaml
-# - template: templates/synapse_cd.yaml
+- template: templates/synapse_cd.yaml
 
