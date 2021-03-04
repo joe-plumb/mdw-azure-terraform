@@ -21,4 +21,4 @@ jobs:
       azureSubscription: '$(svc_conn)'
       AuthenticationType: connectionString
       ConnectionString: '$(sqlpoolconn)'
-      DacpacFile: '$(System.DefaultWorkingDirectory)\synapse\workloadsyndemo\bin\Release\workloadsyndemo.dacpac'
+      DacpacFile: '$(System.DefaultWorkingDirectory)\SynapseDacPac\s\synapse\workloadsyndemo\bin\Release\workloadsyndemo.dacpac'
