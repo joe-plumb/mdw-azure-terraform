@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 trigger: none
 
 resources:
@@ -9,13 +8,6 @@ resources:
       branches:
       - main
 
-=======
- # Trigger on main branch changes
-trigger: 
-  branches:
-  - main
-  
->>>>>>> update trigger
 jobs:
 - template: templates/adf_cd.yaml
 - template: templates/synapse_cd.yaml
