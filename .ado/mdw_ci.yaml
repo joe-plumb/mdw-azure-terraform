@@ -26,7 +26,7 @@ jobs:
   - task: CopyFiles@2
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
     inputs:
-      SourceFolder: '$(agent.builddirectory)/$(solution)/**'
+      SourceFolder: '$(agent.builddirectory)\synapse'
       TargetFolder: '$(build.artifactstagingdirectory)'
   - task: PublishPipelineArtifact@1
     displayName: 'Publish Artifact: SynapseDacPac'
