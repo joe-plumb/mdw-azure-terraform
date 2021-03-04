@@ -2,7 +2,7 @@
 # Further reading is available in the docs
 # https://docs.microsoft.com/en-us/azure/data-factory/continuous-integration-deployment-improvements
 
-jobs: 
+jobs:
 - job: "Deploy_ADF"
   steps:
   - task: DownloadPipelineArtifact@2
