@@ -1,4 +1,7 @@
 # Synapse SSDT Deploy Job
+# Further reading is available in the documentation
+# https://docs.microsoft.com/en-gb/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-continuous-integration-and-deployment#continuous-deployment-with-the-azure-synapse-analytics-or-database-deployment-task
+
 jobs:
 - job: "Deploy_Synapse"
   pool:

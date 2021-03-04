@@ -1,5 +1,7 @@
 # YAML file to validate ADF json
 # Requires a package.json file located in the target repository
+# Further reading is available in the docs
+# https://docs.microsoft.com/en-us/azure/data-factory/continuous-integration-deployment-improvements
 
 jobs:
 - job: "Build_ADFARMTemplates"
@@ -33,10 +35,3 @@ jobs:
       command: 'custom'
       customCommand: 'run build export $(Build.Repository.LocalPath)/adf /subscriptions/$(subscriptionid)/resourceGroups/testResourceGroup/providers/Microsoft.DataFactory/factories/$(adfname) "ArmTemplate"'
     displayName: 'Validate and Generate ARM template'
-
-  # Publish the Artifact to be used as a source for a release pipeline
-  - task: PublishPipelineArtifact@1
-    inputs:
-      targetPath: '$(Build.Repository.LocalPath)/ArmTemplate'
-      artifact: 'AdfArmTemplates'
-      publishLocation: 'pipeline'
