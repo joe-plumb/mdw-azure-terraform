@@ -1,2 +1,0 @@
-﻿CREATE USER [syndevweu01] FOR EXTERNAL PROVIDER;
-
