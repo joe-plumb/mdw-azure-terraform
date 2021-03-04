@@ -14,18 +14,6 @@ jobs:
       artifact: 'AdfArmTemplates'
       publishLocation: 'pipeline'
 
-- job: "Build_SynapseDacPac"
 - template: templates/synapse_ci.yaml
-  steps:
-  - task: CopyFiles@2
-    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-    inputs:
-      SourceFolder: '$(agent.builddirectory)'
-      TargetFolder: '$(build.artifactstagingdirectory)'
-      Contents: '**\synapse\**'
-  - task: PublishPipelineArtifact@1
-    displayName: 'Publish Artifact: SynapseDacPac'
-    inputs:
-      targetPath: '$(build.artifactstagingdirectory)'
-      artifact: 'SynapseDacPac'
-      publishLocation: 'pipeline'
+  parameters:
+    doPublish: true
