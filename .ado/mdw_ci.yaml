@@ -27,5 +27,5 @@ jobs:
     displayName: 'Publish Artifact: drop'
     inputs:
       targetPath: '$(build.artifactstagingdirectory)'
-      artifact: SynapseDacPac
+      artifact: 'SynapseDacPac'
       publishLocation: 'pipeline'

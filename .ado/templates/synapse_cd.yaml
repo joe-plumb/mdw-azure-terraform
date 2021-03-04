@@ -7,10 +7,18 @@ jobs:
   pool:
     vmImage: 'windows-latest'
   steps:
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      source: 'specific'
+      project: '$(project)'
+      artifact: 'SynapseDacPac'
+      pipeline: '$(pipelineId)'
+      runVersion: 'latest'
+      path: $(System.DefaultWorkingDirectory)/SynapseDacPac
   - task: SqlAzureDacpacDeployment@1
     displayName: 'Azure SQL DacpacTask'
     inputs:
       azureSubscription: '$(svc_conn)'
       AuthenticationType: connectionString
       ConnectionString: '$(sqlpoolconn)'
-      DacpacFile: '$(System.DefaultWorkingDirectory)/_Synapse Build/drop/s/synapse/workloadsyndemo/bin/Release/workloadsyndemo.dacpac'
+      DacpacFile: '$(System.DefaultWorkingDirectory)/SynapseDacPac/drop/s/synapse/workloadsyndemo/bin/Release/workloadsyndemo.dacpac'
