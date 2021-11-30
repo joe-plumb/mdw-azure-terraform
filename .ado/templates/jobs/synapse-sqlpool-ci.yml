@@ -1,0 +1,36 @@
+# Synapse SSDT Build job
+# Further reading is available in the documentation
+# https://docs.microsoft.com/en-gb/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-continuous-integration-and-deployment#continuous-deployment-with-the-azure-synapse-analytics-or-database-deployment-task
+
+parameters:
+  - name: doPublish
+    default: false
+    type: boolean
+
+jobs:
+- job: "Build_SynapseDacPac"
+  displayName: 'Publish SQL Packages'
+  pool:
+    vmImage: 'windows-latest'
+
+  steps:
+  - task: NuGetToolInstaller@1
+  - task: NuGetCommand@2
+    inputs:
+      restoreSolution: '$(sqlDwSolution)'
+  - task: VSBuild@1
+    inputs:
+      solution: '$(sqlDwSolution)'
+      platform: '$(buildPlatform)'
+      configuration: '$(buildConfiguration)'
+  - task: VSTest@2
+    inputs:
+      platform: '$(buildPlatform)'
+      configuration: '$(buildConfiguration)'
+  - task: PublishPipelineArtifact@1
+    condition: and(succeeded(), eq('${{ parameters.doPublish }}', true)) 
+    displayName: 'Publish Artifact: SynapseDacPac'
+    inputs:
+      PathtoPublish: '$(sqlDwPath)/$(sqlDwSolutionName)/bin/$(buildConfiguration)/$(sqlDwSolutionName).dacpac'
+      ArtifactName: 'SynapseDacPac'
+      publishLocation: 'pipeline'
