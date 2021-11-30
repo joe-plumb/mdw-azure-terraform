@@ -1,0 +1,38 @@
+parameters:
+# - name: environmentName
+#   type: string
+- name: serviceConnection
+  type: string
+
+jobs:
+- job: deploy_synapse_workspace
+  #dependsOn: deploy_synapse_spark
+  displayName: 'Deploy to Azure Synapse Workspace'
+  pool:
+    vmImage: 'windows-2019'
+  steps:
+  # Download ARM templates from pipeline artefacts
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      source: 'specific'
+      project: '$(project)'
+      artifact: 'SynapseWorkspaceARM'
+      pipeline: '$(pipelineId)'
+      runVersion: 'latest'
+      path: $(System.DefaultWorkingDirectory)\SynapseWorkspaceARM
+  # Check files available
+  - script: dir
+    workingDirectory: $(System.DefaultWorkingDirectory)\SynapseWorkspaceARM\s\$(devWorkspaceName)
+    displayName: List contents of a folder
+  # Deploy into parameterized workspace instance 
+  - task: AzureSynapseWorkspace.synapsecicd-deploy.synapse-deploy.Synapse workspace deployment@1
+    displayName: 'Synapse deployment task for workspace: $(synwsname)'
+    inputs:
+      TemplateFile: '$(System.DefaultWorkingDirectory)\SynapseWorkspaceARM\s\$(devWorkspaceName)\TemplateForWorkspace.json'
+      ParametersFile: '$(System.DefaultWorkingDirectory)\SynapseWorkspaceARM\s\$(devWorkspaceName)\TemplateParametersForWorkspace.json'
+      azureSubscription: ${{ parameters.serviceConnection }}
+      ResourceGroupName: '$(rgname)'
+      TargetWorkspaceName: $(synwsname)
+      #OverrideArmParameters: '-DS_TPCDS_Source_properties_typeProperties_location $(FolderName)'
+
+

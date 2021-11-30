@@ -1,0 +1,56 @@
+parameters:
+- name: env
+  displayName: Environment Name
+  type: string
+  default: dev
+  values:
+  - dev
+  - test
+
+trigger:
+  branches:
+    include:
+     - main
+  paths:
+    include:
+    - iac/*
+
+variables:
+- name: TF_WORKSPACE
+  value: ${{ parameters.env }}
+- group: "mdw-shared-westeurope-01"
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: '1.0.3'
+- task: CmdLine@2
+  displayName: Terraform Init
+  inputs:
+    script: 'terraform init -input=false -backend-config="access_key=$(stmdwsharedwesteurope01-key1)"'
+    workingDirectory: '$(Build.Repository.LocalPath)/iac'
+- task: CmdLine@2
+  displayName: Terraform Validate
+  inputs:
+    script: 'terraform validate'
+    workingDirectory: '$(Build.Repository.LocalPath)/iac'
+- task: CmdLine@2
+  displayName: Terraform Plan
+  inputs:
+    script: 'terraform plan -input=false -out=tfplan -var="env=${{ parameters.env }}" -var="subscription_id=$(tf-ado-syn-subscription-id)" -var="spn-client-id=$(tf-ado-syn-spn-client-id)" -var="spn-client-secret=$(tf-ado-syn-spn-client-secret)" -var="spn-tenant-id=$(tf-ado-syn-spn-tenant-id)" -var="tf-ado-syn-admins=$(tf-ado-syn-admins)"'
+    workingDirectory: '$(Build.Repository.LocalPath)/iac'
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.Repository.LocalPath)/iac'
+    includeRootFolder: true
+    archiveType: 'tar'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-tfplan.tgz'
+    replaceExistingArchive: true
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-tfplan.tgz'
+    ArtifactName: '$(Build.BuildId)-tfplan'
+    publishLocation: 'Container'

@@ -1,0 +1,54 @@
+parameters:
+- name: env
+  displayName: Environment Name
+  type: string
+  default: dev
+  values:
+  - dev
+  - test
+
+trigger: none
+
+variables:
+- name: TF_WORKSPACE
+  value: ${{ parameters.env }}
+- group: "mdw-shared-westeurope-01"
+
+resources:
+  pipelines:
+  - pipeline: 'terraform-apply'   # Name of the pipeline resource
+    source: 'terraform-plan' # Name of the pipeline referenced by the pipeline resource
+    trigger: 
+      branches:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: DownloadPipelineArtifact@2
+  inputs:
+    source: 'specific'
+    project: 'moderndatawarehouse'
+    pipeline: 26
+    runVersion: 'latest'
+    path: '$(Build.SourcesDirectory)/terraform'
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: '$(Build.SourcesDirectory)/**/*-tfplan.tgz'
+    destinationFolder: '$(System.DefaultWorkingDirectory)/terraform'
+    cleanDestinationFolder: false
+    overwriteExistingFiles: false
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: '1.0.3'
+- task: CmdLine@2
+  displayName: Terraform Init
+  inputs:
+    script: 'terraform init -input=false -backend-config="access_key=$(storage-key1)"'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/iac'
+- task: CmdLine@2
+  displayName: Terraform Apply
+  inputs:
+    script: 'terraform apply -auto-approve -input=false tfplan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/iac'

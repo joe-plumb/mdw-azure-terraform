@@ -1,0 +1,16 @@
+jobs:
+- job: "Publish_SynapseWorkspaceARM"
+  displayName: 'Publish Synapse Workspace ARM template'
+  pool:
+    vmImage: 'windows-latest'
+
+  steps:
+  # Check out artefacts from workspace_publish branch
+  - checkout: synapse_workspacepublish
+  # Register as pipelineartefact 
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish Artifact: Synapse Workspace Template'
+    inputs:
+      PathtoPublish: '$(Agent.BuildDirectory)\s\'
+      ArtifactName: 'SynapseWorkspaceARM'
+      publishLocation: 'pipeline'

@@ -1,0 +1,38 @@
+{
+	"name": "SamplePipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "SQL pool stored procedure1",
+				"type": "SqlPoolStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"sqlPool": {
+					"referenceName": "workloadsyndemo",
+					"type": "SqlPoolReference"
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[Procedure5]",
+					"storedProcedureParameters": {
+						"param1": {
+							"value": "1",
+							"type": "Int32"
+						},
+						"param2": {
+							"value": "2",
+							"type": "Int32"
+						}
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}

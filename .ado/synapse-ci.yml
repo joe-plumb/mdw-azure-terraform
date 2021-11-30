@@ -1,0 +1,26 @@
+trigger:
+  branches:
+    include:
+    - workspace_publish
+
+resources:
+  repositories:
+    - repository: synapse_workspacepublish
+      type: git
+      name: moderndatawarehouse/synapse
+      ref: workspace_publish
+
+variables:
+  sqlDwPath: 'sql/'
+  sqlDwSolutionName: 'workloadsyndemo'
+  sqlDwSolution: '$(sqlDwPath)/$(sqlDwSolutionName).sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+stages:
+- stage: 'publish_artifacts'
+  jobs:
+  - template: templates/jobs/synapse-sqlpool-ci.yml
+    parameters:
+      doPublish: true
+  - template: templates/jobs/synapse-workspace-ci.yml

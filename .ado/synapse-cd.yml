@@ -1,0 +1,30 @@
+trigger: none
+
+resources:
+  pipelines:
+  - pipeline: 'synapse-cd'   # Name of the pipeline resource
+    source: 'synapse-ci' # Name of the pipeline referenced by the pipeline resource
+    trigger: 
+      branches:
+      - main
+
+stages:
+- stage: deploy_to_test
+  displayName: 'Deploy to Test'  # In DEV, excludes publishing to synapseworkspace as this is a manual publish step
+  variables:
+  - group: mdw-test
+  - name: project
+    value: 'moderndatawarehouse'
+  - name: pipelineId
+    value: 28
+ - name: devWorkspaceName
+   value: ''
+  jobs:
+  - template: templates/jobs/synapse-sqlpool-cd.yml
+    parameters:
+      # environmentName: 'test'
+      serviceConnection: 'joplum-AIRS'
+  - template: templates/jobs/synapse-workspace-cd.yml
+    parameters:
+      # environmentName: 'test'
+      serviceConnection: 'joplum-AIRS'
