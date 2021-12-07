@@ -17,8 +17,8 @@ stages:
     value: 'mdw-azure-ado'
   - name: pipelineId
     value: 5
- - name: devWorkspaceName
-   value: ''
+  - name: devWorkspaceName
+    value: ''
   jobs:
   - template: templates/jobs/synapse-sqlpool-cd.yml
     parameters:
