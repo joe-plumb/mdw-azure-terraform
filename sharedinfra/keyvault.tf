@@ -36,7 +36,7 @@ resource "azurerm_key_vault_secret" "tf-ado-syn-spn-client-id" {
 }
 
 resource "azurerm_key_vault_secret" "tf-ado-syn-spn-tenant-id" {
-  name         = "tf-ado-syn-spn-client-secret"
+  name         = "tf-ado-syn-spn-tenant-id"
   value        = azuread_service_principal.ado_tf_deployment_sp.application_tenant_id
   key_vault_id = azurerm_key_vault.kv.id
 
