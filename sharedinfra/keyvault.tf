@@ -37,7 +37,7 @@ resource "azurerm_key_vault_secret" "storage_key" {
 
 resource "azurerm_key_vault_secret" "tf-ado-syn-spn-client-id" {
   name         = "tf-ado-syn-spn-client-id"
-  value        = azuread_application.ado_tf_deployment_sp.object_id
+  value        = azuread_service_principal.ado_tf_deployment_sp.application_id
   key_vault_id = azurerm_key_vault.kv.id
 
   depends_on = [azuread_application_password.ado_tf_deployment_sp]
