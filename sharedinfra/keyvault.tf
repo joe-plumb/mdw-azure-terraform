@@ -61,7 +61,7 @@ resource "azurerm_key_vault_secret" "tf-ado-syn-spn-client-secret" {
 
 resource "azurerm_key_vault_secret" "tf-ado-syn-subscription-id" {
   name         = "tf-ado-syn-subscription-id"
-  value        = data.azurerm_subscription.current.id
+  value        = data.azurerm_subscription.current.subscription_id
   key_vault_id = azurerm_key_vault.kv.id
 }
 
