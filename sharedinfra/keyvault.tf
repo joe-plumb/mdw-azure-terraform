@@ -17,6 +17,14 @@ resource "azurerm_key_vault" "kv" {
       "get", "list", "set", "delete", "purge"
     ]
   }
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = azuread_service_principal.ado_tf_deployment_sp.object_id
+
+    secret_permissions = [
+      "get", "list"
+    ]
+  }
 }
 
 resource "azurerm_key_vault_secret" "storage_key" {
