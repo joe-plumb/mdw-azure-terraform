@@ -5,11 +5,11 @@ output "azuread_service_principal_id" {
 
 output "azuread_service_principal_secret" {
   description = "secret for Service Principal"
-  value       = azuread_service_principal_password.ado_tf_deployment_sp.value
+  value       = azuread_application_password.ado_tf_deployment_sp.value
   sensitive = true
 }
 
 output "azuread_tenantid" {
   description = "secret for Service Principal"
-  value       = azuread_service_principal.ado_tf_deployment_sp.application_tenant_id
+  value       = data.azurerm_subscription.current.tenant_id
 }
