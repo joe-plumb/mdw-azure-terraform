@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "kv" {
-  name                        = "mdw-shared-01"
+  name                        = "mdwshared01akv"
   location                    = azurerm_resource_group.rg_shared.location
   resource_group_name         = azurerm_resource_group.rg_shared.name
   enabled_for_disk_encryption = true
@@ -25,6 +25,7 @@ resource "azurerm_key_vault" "kv" {
       "get", "list"
     ]
   }
+
 }
 
 resource "azurerm_key_vault_secret" "storage_key" {

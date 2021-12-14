@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "sharedblob" {
-  name                     = "ejmdwsharedwesteurope01"
+  name                     = "mdw-shared-01"
   resource_group_name      = azurerm_resource_group.rg_shared.name
   location                 = azurerm_resource_group.rg_shared.location
   account_tier             = "Standard"
