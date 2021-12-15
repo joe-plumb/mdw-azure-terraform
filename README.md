@@ -126,3 +126,11 @@ Contains SSDT project that manages and maintains Synapse data model.
 
 - Variables for the CI/CD pipelines need to be manually updated in the pipelines instances on import.
 - These templates do not implement best practice wrt network security. This is beyond the scope of this example.
+
+## Acknowledgements
+
+I would like to acknowledge the input and support on this repo from (@jtracey93)[https://github.com/jtracey93] and (@ejones18)[https://github.com/ejones18]. 
+
+Jack's blog on (Terraform with Azure DevOps)[https://jacktracey.co.uk/terraform-with-azure-devops/] was instrumental for me in understanding and implementing the DevOps pipelines for infrastructure management.
+
+Ethan's support with validating the artefacts and instructions in this repo has been fantastic. Together, we have ironed out a lot of issues that would have otherwise made it much harder for you to make use of these artefacts.
