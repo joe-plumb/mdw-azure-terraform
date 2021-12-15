@@ -42,15 +42,35 @@ This will deploy:
 
 ### Configuration of Azure DevOps
 
+#### Install Terraform Marketplace Extension
+
+1. We will use the Microsoft Terraform extension for Azure DevOps to enable us to install and run terraform tasks with Azure Pipelines. Navigate to the Azure DevOps Marketplace and find the `Terraform` extension from Microsoft DevLabs (link)[https://marketplace.visualstudio.com/items?itemName=ms-devlabs.custom-terraform-tasks] and click `Get it free`. Install the extension in the organisation you are working in.
+
+#### Pipeline initialisation and configuration
+
 1. Navigate to your Azure DevOps project and click "Pipelines", then add a new pipeline by clicking "New Pipeline"
 1. Choose "Azure Repos Git YAML", then select the repo in your project. Choose "Existing Azure Pipelines YAML file, leave branch as `main` and select `/.ado/terraform-status-check.yml`.
 1. Save the pipeline. Run through the above steps 4 more times to create the other 4 pipelines (`terraform-plan`, `terraform-apply`, `synapse-ci` and `synapse-cd`).
-1. Navigate to Pipelines > Library > + Add New Variable Group. Give name your variable group `mdw-shared-westeurope-01`. Select the `Link secrets from an Azure key vault as variables` toggle, and then select the Key Vault deployed as part of the shared infrastructure in the `Deployment of shared infrastructure` steps.
+
+#### Create a Service Connection
+
+1. Navigate to Project settings > Service connections. 
+1. Create a new `Azure Resource Manager` service connection, using **Service Principal (Manual)**. Scope it to the subscription you will be using the for the deployment (insert `id` and `name` values from the [publish settings file](https://ms.portal.azure.com/#blade/Microsoft_Azure_ClassicResources/PublishingProfileBlade) you can access for your subscription)
+1. Input the service principal id and tenant from the terraform output from the `Deployment of shared infrastructure` step. You can view these again by running `terraform output` in the `./sharedinfra` directory if needed. Get the client secret from the Key Vault deployment - (instructions to get secret value from key vault here)[https://docs.microsoft.com/azure/key-vault/secrets/quick-create-portal#retrieve-a-secret-from-key-vault]. Take a note of the service connection name - you will need this in the next step to update the pipelines to make use of this service connection.
+
+#### Create Key Vault backed Variable Group
+
+1. Navigate to Pipelines > Library > + Add New Variable Group. 
+1. Name your variable group `mdw-shared-westeurope-01`. 
+1. Select the `Link secrets from an Azure key vault as variables` toggle, and then select the Key Vault deployed as part of the shared infrastructure in the `Deployment of shared infrastructure` steps.
 1. Under Variables, click `Add +`. Select all the secrets in the vault with the checkboxes, and click ok.
 1. Click Save.
+
+#### Enable branch protection policy for `iac` folder
+
 1. Navigate to Repos > Branches. On the `main` branch, click _More options_ (this is an elipsis on the right hand side when you hover over the branch) and select _Branch policies_.
-1. Click the + on the _build validation_ section. Select your `terraform-status-check` pipeline as the build pipeline. Type `/iac/*` into the path filter (this means that this will only be required for changes to our data platform infrastructure). Set trigger to automatic, Policy requirement as required, and for build to expire _Immediately when main is updated_. Click save.
-1. Finally, create a Service connection in your Azure DevOps Project using the service principal created in the previous step. Navigate to Project settings > Service connections. Create a new `Azure Resource Manager` service connection, using **Service Principal (Manual)**. Scope it to the subscription you will be using the for the deployment (insert `id` and `name` values from the [publish settings file](https://ms.portal.azure.com/#blade/Microsoft_Azure_ClassicResources/PublishingProfileBlade) you can access for your subscription). Input the service principal id, key, and tenant from the terraform output from the previous step. You can view these again by running `terraform output` in the `./sharedinfra` directory if needed. Take a note of the service connection name - you will need this in the next step to update the pipelines to make use of this service connection.
+1. Click the + on the _build validation_ section. Select your `terraform-status-check` pipeline as the build pipeline. Type `/iac/*` into the path filter (this means that this will only be required for changes to our data platform infrastructure). Set trigger to automatic, Policy requirement as required, and for build to expire _Immediately when main is updated_. 
+1. Click save.
 
 ### Edit pipeline templates
 
@@ -67,16 +87,16 @@ This will deploy:
 
 ### Deploy the infrastructure
 
-You can now deploy the development infrastructure from the DevOps pipeline
+You can now deploy the development infrastructure from the DevOps pipeline.
 
-1. Open the `terraform-plan` pipeline and manually trigger the pipeline, selecting `dev` as the parameter. This will deploy the infrastructure for your dev environment. 
+1. Open the `terraform-plan` pipeline and manually trigger the pipeline, selecting `dev` as the parameter. This will deploy the infrastructure for your dev environment. _NB: when you run these pipeline the first time, you will be prompted for permission for the pipeline to access Azure DevOps resources (i.e. the Service Connection). View and enable these permissions to start the job._
 1. To deploy the test environment, manually trigger the `terraform-status-check` pipeline, selecting `test` as the parameter. This initializes the terraform state file in the remote storage. After this has run, open the `terraform-plan` pipeline and manually trigger the pipeline, selecting `test` as the parameter. This will deploy the test environment.
 
 ### Final config and setup
 
 There are two additional steps you need to complete to finish the environment setup:
 
-1. _Link the development Synapse workspace with your DevOps repo_. As per [Synapse DevOps best practice](https://docs.microsoft.com/en-us/azure/synapse-analytics/cicd/source-control#best-practices-for-git-integration), you should only integrate your development workspace with your git repo. [Follow these instructions in the docs](https://docs.microsoft.com/en-us/azure/synapse-analytics/cicd/source-control#connect-with-azure-devops-git) to link your repo to the Synapse workspace.
+1. _Link the development Synapse workspace with your DevOps repo_. As per [Synapse DevOps best practice](https://docs.microsoft.com/azure/synapse-analytics/cicd/source-control#best-practices-for-git-integration), you should only integrate your development workspace with your git repo. [Follow these instructions in the docs](https://docs.microsoft.com/azure/synapse-analytics/cicd/source-control#connect-with-azure-devops-git) to link your repo to the Synapse workspace.
 1. _Update the CD pipeline for Synapse artefacts with the name of the dev workspace_. As discussed earlier in this README, the Synapse CD template needs to reference the development workspace name in the artefacts as part of the deployment process. 
     1. Navigate to your development resource group and note the synapse workspace name.
     1. Create a new branch on your local version of the repo and add the dev workspace name to line 21 of the `synapse-cd.yml` file.
@@ -84,7 +104,7 @@ There are two additional steps you need to complete to finish the environment se
 
 ## Working with the environment
 
-You now have a working set of infrastructure and associated pipelines to manage changes to your environment. 
+You now have a working set of infrastructure and associated pipelines to manage changes to your environment.
 
 _TODO: author steps for demonstration of adding functionality into the Synapse environment_.
 
@@ -106,3 +126,11 @@ Contains SSDT project that manages and maintains Synapse data model.
 
 - Variables for the CI/CD pipelines need to be manually updated in the pipelines instances on import.
 - These templates do not implement best practice wrt network security. This is beyond the scope of this example.
+
+## Acknowledgements
+
+I would like to acknowledge the input and support on this repo from (@jtracey93)[https://github.com/jtracey93] and (@ejones18)[https://github.com/ejones18]. 
+
+Jack's blog on (Terraform with Azure DevOps)[https://jacktracey.co.uk/terraform-with-azure-devops/] was instrumental for me in understanding and implementing the DevOps pipelines for infrastructure management.
+
+Ethan's support with validating the artefacts and instructions in this repo has been fantastic. Together, we have ironed out a lot of issues that would have otherwise made it much harder for you to make use of these artefacts.
