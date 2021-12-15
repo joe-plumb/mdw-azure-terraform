@@ -14,11 +14,11 @@ stages:
   variables:
   - group: mdw-test
   - name: project
-    value: 'moderndatawarehouse'
+    value: 'mdw-azure-ado'
   - name: pipelineId
-    value: 28
- - name: devWorkspaceName
-   value: ''
+    value: 5
+  - name: devWorkspaceName
+    value: ''
   jobs:
   - template: templates/jobs/synapse-sqlpool-cd.yml
     parameters:
@@ -27,4 +27,4 @@ stages:
   - template: templates/jobs/synapse-workspace-cd.yml
     parameters:
       # environmentName: 'test'
-      serviceConnection: 'joplum-AIRS'
+      serviceConnection: 'asc_mdw'

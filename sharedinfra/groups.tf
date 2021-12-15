@@ -1,6 +1,7 @@
 data "azuread_client_config" "current" {}
 
 resource "azuread_group" "tf-ado-syn-admins" {
+
   display_name     = "tf-ado-syn-admins"
   mail_enabled     = true
   mail_nickname    = "tfadosynadmins"

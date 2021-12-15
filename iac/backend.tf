@@ -1,7 +1,7 @@
 terraform {
   backend "azurerm" {
     resource_group_name  = "mdw-shared-westeurope-01"
-    storage_account_name = "stmdwsharedwesteurope01"
+    storage_account_name = "ejmdwsharedwesteurope01"
     container_name       = "synapse"
     key                  = "state.tfstate"
   }

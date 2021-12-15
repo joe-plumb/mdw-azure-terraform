@@ -29,8 +29,8 @@ steps:
 - task: DownloadPipelineArtifact@2
   inputs:
     source: 'specific'
-    project: 'moderndatawarehouse'
-    pipeline: 26
+    project: 'mdw-azure-ado'
+    pipeline: 2
     runVersion: 'latest'
     path: '$(Build.SourcesDirectory)/terraform'
 - task: ExtractFiles@1
