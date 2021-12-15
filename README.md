@@ -25,9 +25,9 @@ The instructions for configuring and deploying this environment are broadly chun
 
 ### Deployment of shared infrastructure
 
-1. Import this repository into a new Azure DevOps repo in your organisation. [Instructions for doing this are available in the docs](https://docs.microsoft.com/en-us/Azure/devops/repos/git/import-git-repository?view=Azure-devops).
+1. Import this repository into a new Azure DevOps repo in your organisation. [Instructions for doing this are available in the docs](https://docs.microsoft.com/Azure/devops/repos/git/import-git-repository?view=Azure-devops).
 1. Open your terminal and clone the repo from your Azure DevOps repo to your local development environment using `git clone`.
-1. Run `az login` to authenticate to Azure, and select the subscription you want to deploy these resources into with [`az account set`](https://docs.microsoft.com/en-us/cli/Azure/account?view=Azure-cli-latest#az_account_set)
+1. Run `az login` to authenticate to Azure, and select the subscription you want to deploy these resources into with [`az account set`](https://docs.microsoft.com/cli/Azure/account?view=Azure-cli-latest#az_account_set)
 1. `cd` into the `./sharedinfra` directory 
 1. Open the `storage.tf` file and update the shared storage account name (line 2)
 1. Deploy the shared resources for the terraform state by running `terraform init` to initialize your terraform environment, `terraform plan` to see what will be deployed, and `terraform apply` to deploy the shared resources. 
@@ -44,7 +44,7 @@ This will deploy:
 
 #### Install Terraform Marketplace Extension
 
-1. We will use the Microsoft Terraform extension for Azure DevOps to enable us to install and run terraform tasks with Azure Pipelines. Navigate to the Azure DevOps Marketplace and find the `Terraform` extension from Microsoft DevLabs (link)[https://marketplace.visualstudio.com/items?itemName=ms-devlabs.custom-terraform-tasks] and click `Get it free`. Install the extension in the organisation you are working in.
+1. We will use the Microsoft Terraform extension for Azure DevOps to enable us to install and run terraform tasks with Azure Pipelines. Navigate to the Azure DevOps Marketplace and find the `Terraform` extension from Microsoft DevLabs [link](https://marketplace.visualstudio.com/items?itemName=ms-devlabs.custom-terraform-tasks) and click `Get it free`. Install the extension in the organisation you are working in.
 
 #### Pipeline initialisation and configuration
 
@@ -56,7 +56,7 @@ This will deploy:
 
 1. Navigate to Project settings > Service connections. 
 1. Create a new `Azure Resource Manager` service connection, using **Service Principal (Manual)**. Scope it to the subscription you will be using the for the deployment (insert `id` and `name` values from the [publish settings file](https://ms.portal.azure.com/#blade/Microsoft_Azure_ClassicResources/PublishingProfileBlade) you can access for your subscription)
-1. Input the service principal id and tenant from the terraform output from the `Deployment of shared infrastructure` step. You can view these again by running `terraform output` in the `./sharedinfra` directory if needed. Get the client secret from the Key Vault deployment - (instructions to get secret value from key vault here)[https://docs.microsoft.com/azure/key-vault/secrets/quick-create-portal#retrieve-a-secret-from-key-vault]. Take a note of the service connection name - you will need this in the next step to update the pipelines to make use of this service connection.
+1. Input the service principal id and tenant from the terraform output from the `Deployment of shared infrastructure` step. You can view these again by running `terraform output` in the `./sharedinfra` directory if needed. Get the client secret from the Key Vault deployment - [instructions to get secret value from key vault here](https://docs.microsoft.com/azure/key-vault/secrets/quick-create-portal#retrieve-a-secret-from-key-vault). Take a note of the service connection name - you will need this in the next step to update the pipelines to make use of this service connection.
 
 #### Create Key Vault backed Variable Group
 
@@ -129,8 +129,8 @@ Contains SSDT project that manages and maintains Synapse data model.
 
 ## Acknowledgements
 
-I would like to acknowledge the input and support on this repo from (@jtracey93)[https://github.com/jtracey93] and (@ejones18)[https://github.com/ejones18]. 
+I would like to acknowledge the input and support on this repo from [@jtracey93](https://github.com/jtracey93) and [@ejones18](https://github.com/ejones18).
 
-Jack's blog on (Terraform with Azure DevOps)[https://jacktracey.co.uk/terraform-with-azure-devops/] was instrumental for me in understanding and implementing the DevOps pipelines for infrastructure management.
+Jack's blog on [Terraform with Azure DevOps](https://jacktracey.co.uk/terraform-with-azure-devops/) was instrumental for me in understanding and implementing the DevOps pipelines for infrastructure management.
 
 Ethan's support with validating the artefacts and instructions in this repo has been fantastic. Together, we have ironed out a lot of issues that would have otherwise made it much harder for you to make use of these artefacts.
